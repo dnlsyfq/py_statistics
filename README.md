@@ -1,3 +1,11 @@
+# Statistics
+
+## Population vs Sample
+```
+
+```
+
+
 # Types of Statistics
 
 ## Descriptive Statistics
