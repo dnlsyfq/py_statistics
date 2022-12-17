@@ -44,6 +44,17 @@ Mean follow tail
  * right skew , right tail
   * median < mean 
 
+```
+import numpy as np
+from scipy.stats import mode
+
+print("\n\nUsing NumPy and SciPy")
+print("MEAN: ", np.mean(dog_sample_weights))
+print("MEDIAN: ", np.median(dog_sample_weights))
+print("MODES: ", mode(dog_sample_weights))
+```
+
+
 # Measure of Spread 
 
 ## Variance 
