@@ -52,6 +52,66 @@ for pos in wnba['Pos'].unique():
     
 position_most_points = max(pos_mean, key=pos_mean.get)
 ```
+
+---
+
+```
+wnba['Scored Per Game'] = wnba['PTS'] / wnba['Games Played'] 
+print(wnba['Pos'].unique())
+
+
+pos_mean = {}
+
+for pos in wnba['Pos'].unique():
+    pos_mean[pos] = wnba.query(f" Pos=='{pos}' ")['Scored Per Game'].sample(10, random_state=0).mean()
+    
+position_most_points = max(pos_mean, key=pos_mean.get)
+```
+
+```
+print(wnba['Games Played'].value_counts(bins = 3, normalize = True) * 100)
+```
+
+```
+_1st = wnba[wnba['Games Played'] <= 12] 
+_2nd = wnba[(wnba['Games Played'] > 12) 
+            & (wnba['Games Played'] <= 22)]
+_3rd = wnba[wnba['Games Played'] > 22]
+
+pts_list = []
+for i in range(0,100):
+    df = pd.concat(a
+        [
+            _3rd['PTS'].sample(7,random_state=i),
+            _2nd['PTS'].sample(2,random_state=i),
+            _1st['PTS'].sample(1,random_state=i)
+        ])
+    pts_list.append(df.mean())
+    
+plt.scatter(range(1,101),pts_list)
+plt.axhline(wnba['PTS'].mean())
+plt.show()
+```
+
+```
+# cluster = wnba['Team'].unique().sample(4,random_state=0)
+
+# print(wnba.query(f" Team.isin(cluster) "))
+
+# print(type(pd.Series(wnba['Team'].unique())))
+
+
+cluster = pd.Series(wnba['Team'].unique()).sample(4,random_state=0)
+df = wnba.query(f" Team.isin({cluster.tolist()}) ")
+
+sampling_error_height = wnba['Height'].mean() - df['Height'].mean()
+sampling_error_age = wnba['Age'].mean() - df['Age'].mean()
+sampling_error_BMI = wnba['BMI'].mean() - df['BMI'].mean()
+sampling_error_points = wnba['PTS'].mean() - df['PTS'].mean()
+
+```
+
+When we try to use a sample to draw conclusions about a population, we do inferential statistics (we infer information from the sample about the population).
  
 # Types of Statistics
 
