@@ -1,11 +1,58 @@
 # Statistics
 
 ## Population vs Sample
-```
 
 ```
+import pandas as pd
+wnba = pd.read_csv('wnba.csv')
+
+print(wnba.head())
+print(wnba.tail())
+print(wnba.shape) 
+
+parameter = wnba['Games Played'].max()
+
+sample = wnba.sample(30,random_state = 1)
+
+statistic = sample['Games Played'].max()
+
+sampling_error = parameter - statistic
+```
+When we sample, we want to minimize the sampling error as much as we can. We want our sample to represent the population as accurately as possible.
+
+If we sampled to measure the mean height of adults in the U.S., we'd like our sample statistic (sample mean height) to get as close as possible to the population's parameter (population mean height)
+
+```
+import pandas as pd
+import matplotlib.pyplot as plt
+
+wnba_list = []
+wnba = pd.read_csv('wnba.csv')
+
+for i in range(0,100):
+    wnba_list.append(wnba['PTS'].sample(10, random_state = i).mean())
+    
+plt.scatter(range(1,101), wnba_list)
+plt.axhline(wnba['PTS'].mean())
+plt.show()
+```
+We can solve this problem by increasing the sample size. As we increase the sample size, the sample means vary less around the population mean, and the chances of getting an unrepresentative sample decrease.
+The downside of simple random sampling is that it can exclude individuals playing a certain position
+ stratified sampling, and we call each stratified group a stratum.
+
+```
+wnba['Scored Per Game'] = wnba['PTS'] / wnba['Games Played'] 
+print(wnba['Pos'].unique())
 
 
+pos_mean = {}
+
+for pos in wnba['Pos'].unique():
+    pos_mean[pos] = wnba.query(f" Pos=='{pos}' ")['Scored Per Game'].sample(10, random_state=0).mean()
+    
+position_most_points = max(pos_mean, key=pos_mean.get)
+```
+ 
 # Types of Statistics
 
 ## Descriptive Statistics
