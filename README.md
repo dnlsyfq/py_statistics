@@ -161,6 +161,16 @@ print("MEDIAN: ", np.median(dog_sample_weights))
 print("MODES: ", mode(dog_sample_weights))
 ```
 
+```
+# Import numpy as np
+import numpy as np
+
+# Subset for Belgium and USA only
+be_and_usa = food_consumption[ (food_consumption['country']=='Belgium') | (food_consumption['country']=='USA') ]
+
+# Group by country, select consumption column, and compute mean and median
+print(be_and_usa.groupby('country')['consumption'].agg([np.mean,np.median]))
+```
 
 # Measure of Spread 
 
